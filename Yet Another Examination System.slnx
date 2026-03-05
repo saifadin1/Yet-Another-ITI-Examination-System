@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Yet Another Examination System.csproj" />
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/Yet Another Examination System.csproj" />
 </Solution>
