@@ -14,7 +14,20 @@ namespace Yet_Another_Examination_System.Domain.Exams
         public List<Question> Questions { get; set; } = new List<Question>();
         public Dictionary<Question, Answer> QuestionAnswerDictionary { get; set; } = new Dictionary<Question, Answer>();
         public Subject Subject { get; set; } = new Subject();
-        public ExamMode Mode { get; set; }
+        public ExamMode Mode 
+        {
+            get;
+            set
+            {
+                Mode = value;
+                if (value == ExamMode.Starting)
+                {
+                    Subject.NotifyStudents(new ExamEventArgs(this, Subject));
+                }
+            }
+        } = ExamMode.Queued;
+
+        public event EventHandler<ExamEventArgs> ExamStarted;
 
         public abstract void ShowExam();
         public abstract void CorrectExam();
@@ -37,7 +50,7 @@ namespace Yet_Another_Examination_System.Domain.Exams
         }
         override public string ToString()
         {
-            return $"Exam for {Subject.Name} with {NumberOfQuestions} questions and time limit of {Time} minutes in {Mode} mode.";
+            return $"Exam for {Subject.Name} with {NumberOfQuestions} questions and time limit of {Time} minutes";
         }
 
         public object Clone()
