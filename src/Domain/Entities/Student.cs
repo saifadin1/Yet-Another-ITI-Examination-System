@@ -1,6 +1,6 @@
 ﻿namespace Yet_Another_Examination_System.Domain.Entities
 {
-    public class Student
+    internal class Student
     {
         public string Name { get; set; }
         public int Id { get; set; }

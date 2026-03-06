@@ -14,18 +14,21 @@ namespace Yet_Another_Examination_System.Domain.Exams
         public List<Question> Questions { get; set; } = new List<Question>();
         public Dictionary<Question, Answer> QuestionAnswerDictionary { get; set; } = new Dictionary<Question, Answer>();
         public Subject Subject { get; set; } = new Subject();
-        public ExamMode Mode 
+        private ExamMode _mode = ExamMode.Queued;
+
+        public ExamMode Mode
         {
-            get;
+            get { return _mode; }
+
             set
             {
-                Mode = value;
-                if (value == ExamMode.Starting)
+                _mode = value;
+                if (_mode == ExamMode.Starting)
                 {
-                    Subject.NotifyStudents(new ExamEventArgs(this, Subject));
+                    Subject?.NotifyStudents(new ExamEventArgs(this, Subject));
                 }
             }
-        } = ExamMode.Queued;
+        }
 
         public event EventHandler<ExamEventArgs> ExamStarted;
 
