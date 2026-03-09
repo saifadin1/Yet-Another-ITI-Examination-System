@@ -13,8 +13,8 @@ namespace Yet_Another_Examination_System
         {
             System.IO.Directory.CreateDirectory("log");
 
-            var practiceQuestionList = new Yet_Another_Examination_System.Domain.Collections.QuestionList("log/practice_questions.log");
-            var finalQuestionList = new Yet_Another_Examination_System.Domain.Collections.QuestionList("log/final_questions.log");
+            var practiceQuestionList = new QuestionList("log/practice_questions.log");
+            var finalQuestionList = new QuestionList("log/final_questions.log");
 
             var math = new Subject { Name = "Mathematics" };
 
@@ -47,14 +47,28 @@ namespace Yet_Another_Examination_System
             var p2 = new ChooseOneQuestion("What is 2+3?", 5, "Simple addition 2", p2Answers.GetAnswerById(2));
             p2.Answers = p2Answers;
 
+            var p3Answers = new AnswerList();
+            p3Answers.AddAnswer(new Answer { Id = 1, Text = "5" });
+            p3Answers.AddAnswer(new Answer { Id = 2, Text = "2" });
+            p3Answers.AddAnswer(new Answer { Id = 3, Text = "3" });
+            p3Answers.AddAnswer(new Answer { Id = 4, Text = "4" });
+
+            // Correct choices are 1 and 3 (encoded as "1,3")
+            var p3Correct = new Answer { Id = 0, Text = "1,3" };
+            var p3 = new ChooseAllQuestion("Select all prime numbers", 10, "Primes selection", p3Correct);
+            p3.Answers = p3Answers;
+
             practice.Questions.Add(p1);
             practiceQuestionList.Add(p1);
             practice.Questions.Add(p2);
             practiceQuestionList.Add(p2);
+            practice.Questions.Add(p3);
+            practiceQuestionList.Add(p3);
             practice.NumberOfQuestions = practice.Questions.Count;
 
             practice.QuestionAnswerDictionary[p1] = p1Answers.GetAnswerById(2);
-            practice.QuestionAnswerDictionary[p2] = p2Answers.GetAnswerById(1); 
+            practice.QuestionAnswerDictionary[p2] = p2Answers.GetAnswerById(1);
+            practice.QuestionAnswerDictionary[p3] = new Answer { Id = 0, Text = "1,3" };
 
             Console.WriteLine();
             Console.WriteLine(new string('*', 60));
